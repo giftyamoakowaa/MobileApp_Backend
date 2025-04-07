@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 
 const chapterSchema = new mongoose.Schema({
+  book: { type: mongoose.Schema.Types.ObjectId, ref: "Book", required: true },
   title: { type: String, required: true },
   content: { type: String, required: true },
-  likes: { type: Number, default: 0 },
-  comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }]
+  chapterNumber: { type: Number, required: true }
 }, { timestamps: true });
 
 export default mongoose.model("Chapter", chapterSchema);
