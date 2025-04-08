@@ -4,46 +4,68 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Load all books from the backend
 // Load all books from the backend
+// In your auth.js or app.js file (or create a new stories.js file)
+
 function loadBooks() {
     const bookList = document.getElementById("book-list");
+    if (!bookList) {
+      console.error("Error: book-list element not found in the DOM.");
+      return;
+    }
     bookList.innerHTML = ""; // Clear existing content
-
+  
     const token = localStorage.getItem('token'); // Get the token from localStorage
-
+  
     fetch("http://localhost:3000/api/books", {
-        headers: {
-            Authorization: `Bearer ${token}` // Add the Authorization header
-        }
+      headers: {
+        Authorization: `Bearer ${token}` // Add the Authorization header
+      }
     })
     .then(response => {
-        if (!response.ok) throw new Error("Failed to fetch books");
-        return response.json();
+      if (!response.ok) {
+        if (response.status === 401 || response.status === 403) {
+          console.error("Unauthorized to fetch books. Redirecting to login.");
+          window.location.href = 'login.html'; // Redirect to login if unauthorized
+        } else {
+          throw new Error(`Failed to fetch books: ${response.status}`);
+        }
+      }
+      return response.json();
     })
     .then(books => {
-        console.log(books); // This will log the fetched books to the console
-        books.forEach(book => {
-            const bookCard = document.createElement("div");
-            bookCard.classList.add("book-card");
-
-            bookCard.innerHTML = `
-                <img src="${book.coverImage}" alt="${book.title}" style="width: 100px;">
-                <h3>${book.title}</h3>
-                <p>Likes: <span id="likes-${book._id}">${book.likes}</span></p>
-                <button onclick="likeBook('${book._id}')">Like</button>
-                <button onclick="openComments('${book._id}')">Comments</button>
-                <button onclick="viewChapters('${book._id}')">Read Chapters</button>
-                <div id="comments-${book._id}" class="comments-section" style="display: none; margin-top: 10px;">
-                    <input type="text" id="comment-input-${book._id}" placeholder="Write a comment...">
-                    <button onclick="addComment('${book._id}')">Post</button>
-                    <div id="comments-list-${book._id}"></div>
-                </div>
-            `;
-
-            bookList.appendChild(bookCard);
-        });
+      console.log("Fetched books:", books);
+      books.forEach(book => {
+        const bookCard = document.createElement("div");
+        bookCard.classList.add("book-card");
+  
+        bookCard.innerHTML = `
+          <img src="${book.coverImage}" alt="${book.title}" style="width: 100px;">
+          <h3>${book.title}</h3>
+          <p>Likes: <span id="likes-${book._id}">${book.likes}</span></p>
+          <button onclick="likeBook('${book._id}')">Like</button>
+          <button onclick="openComments('${book._id}')">Comments</button>
+          <button onclick="viewChapters('${book._id}')">Read Chapters</button>
+          <div id="comments-${book._id}" class="comments-section" style="display: none; margin-top: 10px;">
+            <input type="text" id="comment-input-${book._id}" placeholder="Write a comment...">
+            <button onclick="addComment('${book._id}')">Post</button>
+            <div id="comments-list-${book._id}"></div>
+          </div>
+        `;
+  
+        bookList.appendChild(bookCard);
+      });
     })
     .catch(error => console.error("Error fetching books:", error));
-}
+  }
+  
+  // Call loadBooks when the stories.html page is loaded
+  if (document.documentElement.getAttribute('data-page') === 'stories') {
+    document.addEventListener('DOMContentLoaded', () => {
+      loadBooks();
+    });
+  }
+  
+  // (The other functions like likeBook, openComments, addComment, viewChapters can remain in the same file)
 
 
 // Like a book
