@@ -73,14 +73,16 @@ router.get("/:bookId/chapters", async (req, res) => {
 });
 
 // 📌 Get a single book by ID
-router.get("/api/books/:id", verifyToken, async (req, res) => {
-  const bookId = req.params.id;
+router.get("/:bookId", async (req, res) => {
   try {
+    const { bookId } = req.params;
     const book = await Book.findById(bookId);
+
     if (!book) {
       return res.status(404).json({ message: "Book not found" });
     }
-    res.json(book);
+
+    res.status(200).json(book);
   } catch (error) {
     res.status(500).json({ message: "Error fetching book", error });
   }
@@ -119,14 +121,13 @@ router.post("/", upload.single("coverImage"), async (req, res) => {
 });
 
 // 📌 Get all books
-router.get("/api/books", verifyToken, async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const books = await Book.find();
-    res.json(books);
+    res.status(200).json(books);
   } catch (error) {
     res.status(500).json({ message: "Error fetching books", error });
   }
 });
-
 
 export default router;
