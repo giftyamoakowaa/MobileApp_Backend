@@ -10,11 +10,11 @@ function loadBooks() {
 
     const token = localStorage.getItem('token'); // Get the token from localStorage
 
-    fetch("/.netlify/functions/books-api/api/books", {
+    fetch("http://localhost:3000/api/books", {
         headers: {
-          Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token}` // Add the Authorization header
         }
-      })
+    })
     .then(response => {
         if (!response.ok) throw new Error("Failed to fetch books");
         return response.json();
