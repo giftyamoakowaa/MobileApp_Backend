@@ -1,5 +1,5 @@
-/* General Styles */
-body {
+
+/* body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -7,7 +7,7 @@ body {
     color: #333;
 }
 
-/* Header */
+
 header {
     background-color: #333;
     color: white;
@@ -30,7 +30,7 @@ nav a:hover {
     text-decoration: underline;
 }
 
-/* Book List */
+
 #book-list {
     display: flex;
     flex-wrap: wrap;
@@ -38,7 +38,7 @@ nav a:hover {
     padding: 20px;
 }
 
-/* .book-card {
+.book-card {
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -47,7 +47,7 @@ nav a:hover {
     text-align: center;
     padding: 15px;
     transition: transform 0.3s ease;
-} */
+}
 
 .book-card:hover {
     transform: scale(1.05);
@@ -60,10 +60,10 @@ nav a:hover {
     border-radius: 8px;
 }
 
-/* .book-card h3 {
+.book-card h3 {
     font-size: 20px;
     margin-top: 10px;
-} */
+}
 
 .book-card button {
     background-color: #333;
@@ -111,18 +111,18 @@ nav a:hover {
 }
 .password-container input {
     width: 100%;
-    padding-right: 30px; /* Ensure space for the icon */
+    padding-right: 30px; 
 }
 
 @media (max-width: 768px) {
-    /* Styles for mobile devices */
+    
     body {
         font-size: 16px;
     }
     .book-card {
         width: 100%;
     }
-}
+} */
 
 body {
     font-family: sans-serif;
