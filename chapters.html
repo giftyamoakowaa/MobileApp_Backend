@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Library</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Welcome to Our Book Library</h1>
+            <nav>
+                <ul>
+                    <li><a href="#">Sign Up</a></li>
+                    <li><a href="#">Login</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <div class="book-list">
+            <div class="book-card">
+                <h3>Unveiling Love</h3>
+                <div class="likes">Likes: 120</div>
+                <div class="button-group">
+                    <button class="likes-button">Like</button>
+                    <button class="comments-button">Comments</button>
+                    <button class="read-chapters-button" onclick="viewChapters(1)">Read Chapters</button>
+                </div>
+            </div>
+
+            <div class="book-card">
+                <h3>Heartfelt Horizons</h3>
+                <div class="likes">Likes: 95</div>
+                <div class="button-group">
+                    <button class="likes-button">Like</button>
+                    <button class="comments-button">Comments</button>
+                    <button class="read-chapters-button" onclick="viewChapters(2)">Read Chapters</button>
+                </div>
+            </div>
+
+            </div>
+
+        <div id="chapter-container">
+            </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

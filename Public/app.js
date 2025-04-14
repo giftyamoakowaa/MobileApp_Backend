@@ -107,10 +107,6 @@ function addComment(bookId) {
 
 // Placeholder for Read Chapters
 function viewChapters(bookId) {
-    alert(`Chapters for book ID: ${bookId}`);
-}
-
-function viewChapters(bookId) {
     fetch(`http://localhost:3000/api/books/${bookId}/chapters`) // Make a GET request
         .then(response => {
             if (!response.ok) throw new Error("Failed to fetch chapters");
@@ -118,22 +114,51 @@ function viewChapters(bookId) {
         })
         .then(chapters => {
             // Display chapters on the page
-            const chaptersList = document.createElement("div");
+            const chaptersContainer = document.createElement("div"); // Use a container for all chapters
             chapters.forEach(chapter => {
                 const chapterDiv = document.createElement("div");
-                chapterDiv.innerHTML = `
-                    <h3>${chapter.title}</h3>
-                    <p>${chapter.content}</p>
-                `;
-                chaptersList.appendChild(chapterDiv);
+                chapterDiv.classList.add("chapter-content"); // Apply the chapter-content class
+
+                const chapterTitle = document.createElement("h2");
+                chapterTitle.textContent = chapter.title;
+                chapterDiv.appendChild(chapterTitle);
+
+                const lines = chapter.content.split('\n');
+                lines.forEach(line => {
+                    if (line.includes(':')) {
+                        const [speaker, ...textParts] = line.split(':');
+                        const text = textParts.join(':').trim();
+
+                        const dialogueParagraph = document.createElement('p');
+                        dialogueParagraph.classList.add('dialogue');
+
+                        const speakerSpan = document.createElement('span');
+                        speakerSpan.classList.add('speaker');
+                        speakerSpan.textContent = speaker.trim() + ':';
+
+                        const lineSpan = document.createElement('span');
+                        lineSpan.classList.add('line');
+                        lineSpan.textContent = text;
+
+                        dialogueParagraph.appendChild(speakerSpan);
+                        dialogueParagraph.appendChild(lineSpan);
+                        chapterDiv.appendChild(dialogueParagraph);
+                    } else if (line.trim() !== "") {
+                        // Handle narrative lines (non-dialogue)
+                        const narrativeParagraph = document.createElement('p');
+                        narrativeParagraph.textContent = line.trim();
+                        chapterDiv.appendChild(narrativeParagraph);
+                    }
+                });
+                chaptersContainer.appendChild(chapterDiv); // Add each chapter to the container
             });
-            document.body.appendChild(chaptersList); // Append to the body, adjust as needed
+            document.body.appendChild(chaptersContainer); // Append the container to the body (adjust as needed)
         })
         .catch(error => console.error("Error fetching chapters:", error));
 }
 
-
-
+// You'll need to call this function with the appropriate bookId, for example:
+// viewChapters(123);
 // document.addEventListener("DOMContentLoaded", () => {
 //     loadBooks();
 // });

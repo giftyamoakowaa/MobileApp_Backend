@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="./css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 </head>
 <body>
 
@@ -20,11 +19,30 @@
     </header>
 
     <main id="book-list">
-        <!-- Books will be displayed here dynamically -->
+        <div class="book-card">
+            <h3>Unveiling Love</h3>
+            <div class="likes">Likes: 120</div>
+            <div class="button-group">
+                <button class="likes-button">Like</button>
+                <button class="comments-button">Comments</button>
+                <button class="read-chapters-button" onclick="viewChapters(1)">Read Chapters</button>
+            </div>
+        </div>
+
+        <div class="book-card">
+            <h3>Heartfelt Horizons</h3>
+            <div class="likes">Likes: 95</div>
+            <div class="button-group">
+                <button class="likes-button">Like</button>
+                <button class="comments-button">Comments</button>
+                <button class="read-chapters-button" onclick="viewChapters(2)">Read Chapters</button>
+            </div>
+        </div>
+
+        <div id="chapter-container">
+            </div>
     </main>
 
     <script src="app.js"></script>
-
-
 </body>
 </html>
