@@ -175,7 +175,7 @@ header nav ul li a:hover {
     color: #007bff;
 }
 
-.book-list {
+#book-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px;
@@ -291,7 +291,16 @@ header nav ul li a:hover {
     max-height: 80vh;
     overflow-y: auto;
     width: 80%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
 }
+
+.chapter-display-area.show {
+    opacity: 1;
+    visibility: visible;
+}
+
 
 .chapter-display-area.hidden {
     display: none;
@@ -312,3 +321,23 @@ header nav ul li a:hover {
 #close-chapter-button:hover {
     background-color: #c82333;
 }
+
+
+.likes-button {
+    background-color: #ff6b81;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .likes-button:hover {
+    background-color: #ff4757;
+  }
+  
+  .likes-button.liked {
+    background-color: #2ecc71;
+  }
+  
