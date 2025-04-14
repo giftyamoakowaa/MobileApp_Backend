@@ -272,3 +272,43 @@ header nav ul li a:hover {
     width: calc(100% - 70px); /* Adjust width based on speaker width and margin */
     vertical-align: top; /* Align dialogue to the top */
 }
+
+
+/* ... your existing CSS ... */
+
+.chapter-display-area {
+    margin-top: 30px;
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 20px;
+    position: fixed; /* Or absolute, depending on your desired layout */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000; /* Ensure it's on top of other content */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-height: 80vh;
+    overflow-y: auto;
+    width: 80%;
+}
+
+.chapter-display-area.hidden {
+    display: none;
+}
+
+#close-chapter-button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 15px;
+    transition: background-color 0.3s ease;
+}
+
+#close-chapter-button:hover {
+    background-color: #c82333;
+}
