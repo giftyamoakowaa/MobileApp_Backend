@@ -111,15 +111,22 @@ function addComment(bookId) {
 }
 
 function viewChapters(bookId) {
+    const chapterDisplayArea = document.getElementById("chapter-display-area");
+    const chapterContent = document.getElementById("chapter-content"); // Make sure this is the correct container for individual chapters
+
+    if (!chapterContent) {
+        console.error("Error: chapter-content element not found.");
+        return;
+    }
+
+    chapterContent.innerHTML = ''; // Clear previous content
+
     fetch(`http://localhost:3000/api/books/${bookId}/chapters`)
         .then(response => {
             if (!response.ok) throw new Error("Failed to fetch chapters");
             return response.json();
         })
         .then(chapters => {
-            const chapterContainer = document.getElementById('chapter-container');
-            chapterContainer.innerHTML = '';
-
             chapters.forEach(chapter => {
                 const chapterDiv = document.createElement("div");
                 chapterDiv.classList.add("chapter-content");
@@ -154,8 +161,10 @@ function viewChapters(bookId) {
                         chapterDiv.appendChild(narrativeParagraph);
                     }
                 });
-                chapterContainer.appendChild(chapterDiv);
+                chapterContent.appendChild(chapterDiv); // Append the chapter div to the chapter content area
             });
+            chapterDisplayArea.classList.add('show'); // Show the chapter display area using the 'show' class
+            chapterDisplayArea.classList.remove('hidden'); // Ensure 'hidden' is removed if it was applied
         })
         .catch(error => console.error("Error fetching chapters:", error));
 }
