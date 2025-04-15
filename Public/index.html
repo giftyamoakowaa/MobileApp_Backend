@@ -6,6 +6,7 @@
     <title>Book Collection</title>
     <link rel="stylesheet" href="./css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 
@@ -38,13 +39,13 @@
             </div>
         </div>
 
-        <div id="chapter-container"></div>
+        <div id="chapter-container" class="chapter-display-area hidden">
+            <div id="close-chapter-icon">
+                <i class="fas fa-times"></i> </div>
+            <div id="chapter-content">
+                </div>
+        </div>
     </main>
-
-    <div id="chapter-display-area" class="chapter-display-area hidden">
-        <div id="chapter-content"></div>
-        <button id="close-chapter-button">Close Chapter</button>
-    </div>
 
     <script src="app.js"></script>
 </body>

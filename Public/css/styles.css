@@ -276,17 +276,17 @@ header nav ul li a:hover {
 
 /* ... your existing CSS ... */
 
-.chapter-display-area {
+/* .chapter-display-area {
     margin-top: 30px;
     background-color: #f9f9f9;
     border: 1px solid #eee;
     border-radius: 8px;
     padding: 20px;
-    position: fixed; /* Or absolute, depending on your desired layout */
+    position: fixed; 
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 1000; /* Ensure it's on top of other content */
+    z-index: 1000; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     max-height: 80vh;
     overflow-y: auto;
@@ -320,7 +320,7 @@ header nav ul li a:hover {
 
 #close-chapter-button:hover {
     background-color: #c82333;
-}
+} */
 
 
 .likes-button {
@@ -340,4 +340,56 @@ header nav ul li a:hover {
   .likes-button.liked {
     background-color: #2ecc71;
   }
+
+
+
+
+  /* ... your existing CSS ... */
+
+.chapter-display-area {
+    margin-top: 30px;
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 20px;
+    position: fixed; /* Or absolute, depending on your desired layout */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000; /* Ensure it's on top of other content */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-height: 80vh;
+    overflow-y: auto;
+    width: 80%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.chapter-display-area.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.chapter-display-area.hidden {
+    display: none;
+}
+
+#close-chapter-button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 15px;
+    transition: background-color 0.3s ease;
+}
+
+#close-chapter-button:hover {
+    background-color: #c82333;
+}
+
+/* ... your other CSS ... */
   
