@@ -27,14 +27,14 @@ ChapterRouter.post("/", async (req, res) => {
 
 
 // GET - Get chapters for a specific book
-ChapterRouter.get("/:bookId/chapters", async (req, res) => {
-    try {
-        const bookId = req.params.bookId;
-        const chapters = await Chapter.find({ book: bookId });
-        res.json(chapters);
-    } catch (error) {
-        res.status(500).json({ message: "Error fetching chapters", error });
-    }
-});
+// ChapterRouter.get("/:bookId/chapters", async (req, res) => {
+//     try {
+//         const bookId = req.params.bookId;
+//         const chapters = await Chapter.find({ book: bookId });
+//         res.json(chapters);
+//     } catch (error) {
+//         res.status(500).json({ message: "Error fetching chapters", error });
+//     }
+// });
 
 export default ChapterRouter;

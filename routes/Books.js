@@ -73,18 +73,18 @@ router.get("/:bookId/chapters", async (req, res) => {
 });
 
 // 📌 Get a single book by ID
-router.get("/:bookId", async (req, res) => {
+router.get("/:bookId/chapters", async (req, res) => {
   try {
     const { bookId } = req.params;
-    const book = await Book.findById(bookId);
+    console.log(`Fetching chapters for book ID: ${bookId}`); // Log the book ID
 
-    if (!book) {
-      return res.status(404).json({ message: "Book not found" });
-    }
+    const chapters = await Chapter.find({ book: bookId });
+    console.log("Chapters:", chapters);  // Log the chapters
 
-    res.status(200).json(book);
+    res.status(200).json(chapters);
   } catch (error) {
-    res.status(500).json({ message: "Error fetching book", error });
+    console.error("Error fetching chapters:", error); // Log the full error
+    res.status(500).json({ message: "Error fetching chapters", error: error.message }); // Include error message
   }
 });
 

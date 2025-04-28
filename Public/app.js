@@ -162,7 +162,7 @@ function viewChapters(bookId) {
             return response.json();
         })
         .then(chapters => {
-            const chapterContainer = document.getElementById('chapter-container');
+            const chapterContainer = document.getElementById('chapter-content');
             chapterContainer.innerHTML = '';
 
             chapters.forEach(chapter => {
