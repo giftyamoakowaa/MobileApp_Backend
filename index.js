@@ -36,7 +36,7 @@ mongoose.connect(process.env.MONGO_URI)
   .catch((err) => console.error("MongoDB connection error:", err));
 
 // Routes
-// app.use("/api/chapters", ChapterRouter);
+// app.use("/api/chapters", ChapterRouter); 
 app.use("/api/auth", authRouter); // Use auth routes
 app.use("/api/books", router); // Now `/api/books` works
 

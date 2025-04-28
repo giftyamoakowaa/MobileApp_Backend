@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const readChaptersButton = document.createElement('button');
           readChaptersButton.classList.add('read-chapters-button');
           readChaptersButton.textContent = 'Read Chapters';
-          readChaptersButton.onclick = () => viewChapters(book.id); //  Pass the book.id here
+          readChaptersButton.onclick = () => viewChapters(book._id); // Use book._id here
   
           buttonGroup.appendChild(likeButton);
           buttonGroup.appendChild(commentsButton);
