@@ -11,6 +11,15 @@ document.addEventListener('DOMContentLoaded', () => {
         books.forEach(book => {
           const bookCard = document.createElement('div');
           bookCard.classList.add('book-card');
+
+         // Create and add the image element
+         const coverImage = document.createElement('img');
+         coverImage.src = book.coverImage; // Set the src attribute
+         coverImage.alt = book.title;       // Add an alt attribute (important for accessibility)
+         bookCard.appendChild(coverImage);    // Append the image to the bookCard
+
+
+
   
           const titleElement = document.createElement('h3');
           titleElement.textContent = book.title;
