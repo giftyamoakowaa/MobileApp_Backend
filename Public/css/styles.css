@@ -150,30 +150,31 @@ header nav ul li a:hover {
 
 
 #book-list {
-    display: flex;          /* Use flexbox for layout */
-    flex-wrap: wrap;      /* Allow books to wrap to multiple lines */
-    justify-content: space-around; /* Distribute books evenly */
-    padding: 10px;
-    gap: 10px;             /* Add some gap between book cards */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start; /* Align items to the start */
+    padding: 20px;
+    gap: 20px;
   }
   
   .book-card {
-    width: 300px;         /* Give each book card a fixed width */
-    border: 1px solid #ddd;  /* Add a border */
-    border-radius: 8px;  /* Rounded corners */
+    width: calc(33.33% - 40px); /* 3 cards minus the gap */
+    border: 1px solid #ddd;
+    border-radius: 8px;
     padding: 15px;
     margin-bottom: 20px;
     background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
-    transition: transform 0.3s ease; /* Smooth transition on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    box-sizing: border-box; /* Include padding and border in width */
   }
   
   .book-card:hover {
-    transform: translateY(-5px);  /* Move card up slightly on hover */
+    transform: translateY(-5px);
   }
   
   .book-card h3 {
-    font-size: 1.2em;      /* Smaller heading */
+    font-size: 1.2em;
     margin-bottom: 10px;
     color: #333;
   }
@@ -186,7 +187,7 @@ header nav ul li a:hover {
   
   .button-group {
     display: flex;
-    flex-direction: column;  /* Stack buttons vertically */
+    flex-direction: column;
     gap: 10px;
   }
   
@@ -194,40 +195,53 @@ header nav ul li a:hover {
     padding: 10px 15px;
     border: none;
     border-radius: 5px;
-    background-color: #4CAF50; /* Green */
+    background-color: #4CAF50;
     color: white;
     font-size: 1em;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    width: 100%; /* Make buttons take full width of container */
-    text-align: center; /* Center the button text */
+    width: 100%;
+    text-align: center;
   }
   
   .button-group button:hover {
-    background-color: #367c39; /* Darker green */
+    background-color: #367c39;
   }
   
   .comments-button {
-    background-color: #008CBA; /* Blue */
+    background-color: #008CBA;
   }
   
   .comments-button:hover {
-    background-color: #00688B; /* Darker blue */
+    background-color: #00688B;
   }
   
-  .read-chapters-button{
+  .read-chapters-button {
     background-color: #f44336;
   }
   
-  .read-chapters-button:hover{
+  .read-chapters-button:hover {
     background-color: #d32f2f;
   }
   
   /* Add this to adjust image styling, if needed */
   .book-card img {
-    width: 100%;          /* Make image fill the card width */
-    height: auto;         /* Maintain aspect ratio */
-    border-radius: 8px 8px 0 0; /* Only round top corners */
+    width: 100%;
+    height: auto;
+    border-radius: 8px 8px 0 0;
     margin-bottom: 10px;
+  }
+  
+  /* Media query for smaller screens */
+  @media (max-width: 768px) {
+    .book-card {
+      width: calc(50% - 20px); /* 2 cards on smaller screens */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .book-card {
+      width: 100%; /* 1 card on very small screens */
+    }
   }
   
