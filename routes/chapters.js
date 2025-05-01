@@ -26,6 +26,35 @@ ChapterRouter.post("/", async (req, res) => {
 });
 
 
+// PUT - Update an existing chapter
+ChapterRouter.put("/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { title, content, chapterNumber } = req.body;
+
+        // 1. Validation: Check if the chapter exists.
+        const existingChapter = await Chapter.findById(id);
+        if (!existingChapter) {
+            return res.status(404).json({ message: "Chapter not found!" });
+        }
+
+        // 2. Update the chapter's fields.  Handles null/undefined values.
+        existingChapter.title = title ?? existingChapter.title;
+        existingChapter.content = content ?? existingChapter.content;
+        existingChapter.chapterNumber = chapterNumber ?? existingChapter.chapterNumber;
+
+        // 3. Save the updated chapter.
+        const updatedChapter = await existingChapter.save();
+
+        res.status(200).json(updatedChapter);
+    } catch (error) {
+        console.error("Error updating chapter:", error);
+        res.status(500).json({ message: "Error updating chapter", error: error.message }); // Include error message.
+    }
+});
+
+
+
 // GET - Get chapters for a specific book
 // ChapterRouter.get("/:bookId/chapters", async (req, res) => {
 //     try {
