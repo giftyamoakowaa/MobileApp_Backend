@@ -62,51 +62,51 @@ document.addEventListener('DOMContentLoaded', () => {
   
   function viewChapters(bookId) {
     fetch(`http://localhost:3000/api/books/${bookId}/chapters`)
-        .then(response => {
-            if (!response.ok) throw new Error("Failed to fetch chapters");
-            return response.json();
-        })
-        .then(chapters => {
-            const chapterContainer = document.getElementById('chapter-container');
-            chapterContainer.innerHTML = ''; // Clear previous content
-
-            chapters.forEach(chapter => {
-                const chapterDiv = document.createElement("div");
-                chapterDiv.classList.add("chapter-content");
-
-                const chapterTitle = document.createElement("h2");
-                chapterTitle.textContent = chapter.title;
-                chapterDiv.appendChild(chapterTitle);
-
-                const lines = chapter.content.split('\n');
-                lines.forEach(line => {
-                    if (line.includes(':')) {
-                        const colonIndex = line.indexOf(':');
-                        const speaker = line.substring(0, colonIndex);
-                        const text = line.substring(colonIndex + 1).trim();
-
-                        const dialogueParagraph = document.createElement('p');
-                        dialogueParagraph.classList.add('dialogue');
-
-                        const speakerSpan = document.createElement('span');
-                        speakerSpan.classList.add('speaker');
-                        speakerSpan.textContent = speaker.trim() + ': '; // Added space after speaker
-                        
-                        const lineSpan = document.createElement('span');
-                        lineSpan.classList.add('line');
-                        lineSpan.textContent = text;
-
-                        dialogueParagraph.appendChild(speakerSpan);
-                        dialogueParagraph.appendChild(lineSpan);
-                        chapterDiv.appendChild(dialogueParagraph);
-                    } else if (line.trim() !== "") {
-                        const narrativeParagraph = document.createElement('p');
-                        narrativeParagraph.textContent = line.trim();
-                        chapterDiv.appendChild(narrativeParagraph);
-                    }
-                });
-                chapterContainer.appendChild(chapterDiv);
-            });
-        })
-        .catch(error => console.error("Error fetching chapters:", error));
-}
+      .then(response => {
+        if (!response.ok) throw new Error("Failed to fetch chapters");
+        return response.json();
+      })
+      .then(chapters => {
+        const chapterContainer = document.getElementById('chapter-content');
+        chapterContainer.innerHTML = '';
+  
+        chapters.forEach(chapter => {
+          const chapterDiv = document.createElement("div");
+          chapterDiv.classList.add("chapter-content");
+  
+          const chapterTitle = document.createElement("h2");
+          chapterTitle.textContent = chapter.title;
+          chapterDiv.appendChild(chapterTitle);
+  
+          const lines = chapter.content.split('\n');
+          lines.forEach(line => {
+            if (line.includes(':')) {
+              const [speaker, ...textParts] = line.split(':');
+              const text = textParts.join(':').trim();
+  
+              const dialogueParagraph = document.createElement('p');
+              dialogueParagraph.classList.add('dialogue');
+  
+              const speakerSpan = document.createElement('span');
+              speakerSpan.classList.add('speaker');
+              speakerSpan.textContent = speaker.trim() + ':';
+  
+              const lineSpan = document.createElement('span');
+              lineSpan.classList.add('line');
+              lineSpan.textContent = text;
+  
+              dialogueParagraph.appendChild(speakerSpan);
+              dialogueParagraph.appendChild(lineSpan);
+              chapterDiv.appendChild(dialogueParagraph);
+            } else if (line.trim() !== "") {
+              const narrativeParagraph = document.createElement('p');
+              narrativeParagraph.textContent = line.trim();
+              chapterDiv.appendChild(narrativeParagraph);
+            }
+          });
+          chapterContainer.appendChild(chapterDiv);
+        });
+      })
+      .catch(error => console.error("Error fetching chapters:", error));
+  }
+  
