@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(chapters => {
             const chapterContainer = document.getElementById('chapter-container');
-            chapterContainer.innerHTML = '';
+            chapterContainer.innerHTML = ''; // Clear previous content
 
             chapters.forEach(chapter => {
                 const chapterDiv = document.createElement("div");
@@ -90,8 +90,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
                         const speakerSpan = document.createElement('span');
                         speakerSpan.classList.add('speaker');
-                        speakerSpan.textContent = speaker.trim() + ':';
-
+                        speakerSpan.textContent = speaker.trim() + ': '; // Added space after speaker
+                        
                         const lineSpan = document.createElement('span');
                         lineSpan.classList.add('line');
                         lineSpan.textContent = text;
