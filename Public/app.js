@@ -110,3 +110,22 @@ document.addEventListener('DOMContentLoaded', () => {
       .catch(error => console.error("Error fetching chapters:", error));
   }
   
+
+
+  function closeChapter() {
+    const chapterDisplayArea = document.getElementById('chapter-display-area');
+    if (chapterDisplayArea) {
+      chapterDisplayArea.classList.add('hidden'); // Use your 'hidden' class
+      chapterDisplayArea.innerHTML = ''; // Clear previous chapter content
+    }
+  }
+
+  
+  function nextChapter() {
+    if (currentChapterIndex < chapters.length - 1) {
+        currentChapterIndex++;
+        displayChapter(currentChapterIndex);
+    } else {
+        alert("You have reached the end of the book!"); // Or display a message
+    }
+}

@@ -50,13 +50,14 @@
     </main>
 
     <div id="chapter-display-area" class="chapter-display-area hidden">
-        <div id="close-chapter-button" style="position: absolute; top: 10px; right: 15px; font-size: 20px; cursor: pointer; color: #555;">
-            <i class="fas fa-times"></i>
+        <div id="close-chapter-button" style="position: absolute; top: 10px; right: 15px; font-size: 20px; cursor: pointer; color: #555;" onclick="closeChapter()">  <i class="fas fa-times"></i>
         </div>
         <div id="chapter-content" style="padding-top: 30px;"></div>
         <button id="like-chapter-button">Like This Chapter</button>
         <span id="chapter-likes-count">0 Likes</span>
-    </div>
+        <button id="next-chapter-button" onclick="nextChapter()">Next Chapter</button>
+      </div>
+      
 
     <script src="app.js"></script> 
 </body>
