@@ -247,7 +247,7 @@ header nav ul li a:hover {
   
 
 
-  #chapter-display-area {
+  /* #chapter-display-area {
     display: none;
     position: fixed;
     top: 0;
@@ -320,4 +320,4 @@ header nav ul li a:hover {
   }
   #next-chapter-button:hover{
     background-color: #2563eb;
-  }
+  } */
