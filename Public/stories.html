@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stories</title>
     <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
@@ -12,11 +13,46 @@
         <h1>Stories</h1>
         <button id="logoutBtn">Logout</button>
     </header>
-
-    <main>
-        <div id="book-list">This is a test</div>
+    <main id="book-list">
+        <div class="book-card">
+            <h3>Unveiling Love</h3>
+            <div class="likes">Likes: <span id="book-likes-1">0</span></div>
+            <div class="button-group">
+                <button class="likes-button" onclick="likeBook('1')">Like</button>
+                <button class="comments-button" onclick="openComments('1')">Comments</button>
+                <button class="read-chapters-button" onclick="viewChapters('1')">Read Chapters</button>
+            </div>
+            <div id="comments-1" class="comments-section" style="display: none; margin-top: 10px;">
+                <input type="text" id="comment-input-1" placeholder="Write a comment...">
+                <button onclick="addComment('1')">Post</button>
+                <div id="comments-list-1"></div>
+            </div>
+        </div>
+        <div class="book-card">
+            <h3>Heartfelt Horizons</h3>
+            <div class="likes">Likes: <span id="book-likes-2">0</span></div>
+            <div class="button-group">
+                <button class="likes-button" onclick="likeBook('2')">Like</button>
+                <button class="comments-button" onclick="openComments('2')">Comments</button>
+                <button class="read-chapters-button" onclick="viewChapters('2')">Read Chapters</button>
+            </div>
+            <div id="comments-2" class="comments-section" style="display: none; margin-top: 10px;">
+                <input type="text" id="comment-input-2" placeholder="Write a comment...">
+                <button onclick="addComment('2')">Post</button>
+                <div id="comments-list-2"></div>
+            </div>
+        </div>
     </main>
-
+    <div id="chapter-display-area" class="hidden">
+        <div id="chapter-content">
+            <button id="close-chapter-button" onclick="closeChapter()">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2 id="chapter-title"></h2>
+            <div id="chapter-text"></div>
+            <button id="next-chapter-button"></button>
+        </div>
+    </div>
     <script src="app.js"></script>
 </body>
 </html>
