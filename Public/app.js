@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    fetch('http://localhost:3000/api/books')
+    fetch('https://mobileapp-backend-1.onrender.com/api/books')
       .then(response => {
         if (!response.ok) throw new Error("Failed to fetch books");
         return response.json();
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   
   function viewChapters(bookId) {
-    fetch(`http://localhost:3000/api/books/${bookId}/chapters`)
+    fetch(`https://mobileapp-backend-1.onrender.com/api/books/${bookId}/chapters`)
       .then(response => {
         if (!response.ok) throw new Error("Failed to fetch chapters");
         return response.json();

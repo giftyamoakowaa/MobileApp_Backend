@@ -1,4 +1,4 @@
-const apiUrl = "http://localhost:3000/api";
+const apiUrl = "https://mobileapp-backend-1.onrender.com/api";
 const token = localStorage.getItem("token");
 
 // Redirect to login if user is not authenticated
