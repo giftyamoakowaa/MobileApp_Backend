@@ -19,14 +19,21 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "*",
-    methods: ["GET", "POST"]
+    origin: 'https://creative-alfajores-6c6850.netlify.app/',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
   }
 });
 
+app.options('*', cors());
+
 // Middleware
 app.use(express.json());
-app.use(cors());
+app.use(cors({  // Added options here, too
+    origin: "https://your-netlify-app-name.netlify.app", //  *Also* use your Netlify URL here
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+}));
 app.use(express.static('public'));
 // app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
