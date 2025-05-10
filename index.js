@@ -30,7 +30,7 @@ app.options('*', cors());
 // Middleware
 app.use(express.json());
 app.use(cors({  // Added options here, too
-    origin: "https://your-netlify-app-name.netlify.app", //  *Also* use your Netlify URL here
+    origin: "https://creative-alfajores-6c6850.netlify.app", //  *Also* use your Netlify URL here
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
 }));
