@@ -1,33 +1,230 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="./css/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <h2>Login</h2>
+    <form id="loginForm">
+        <input type="email" id="email" name="email" autocomplete="email" placeholder="Enter your email" required>
+        <div class="password-container">
+            <input type="password" id="password" placeholder="Password" required>
+            <span class="toggle-password" onclick="togglePassword('password')">&#128065;</span>
+        </div>
+        <button type="submit">Login</button>
+    </form>
+    <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+    <script src="./js/auth.js"></script>
+</body>
+</html> -->
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Collection</title>
-    <link rel="stylesheet" href="./css/styles.css">
-    <link rel="manifest" href="/manifest.json">
+    <title>Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif; /* Modern font */
+            margin: 0;
+            padding: 0;
+            background-color: #f3f4f6; /* Light background (Tailwind's gray-100) */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased; /* Improve font rendering */
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 400px; /* Increased max-width */
+            padding: 2rem;
+            background-color: #fff; /* White background (Tailwind's bg-white) */
+            border-radius: 0.75rem; /* Rounded corners (Tailwind's rounded-lg) */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow (similar to Tailwind's shadow-md) */
+            /*border: 1px solid #e2e8f0; !* Add a border *!*/
+        }
+
+        .login-title {
+            font-size: 1.875rem; /* Larger font size (Tailwind's text-2xl) */
+            font-weight: 600; /* Medium font weight (Tailwind's font-semibold) */
+            color: #1e293b; /* Darker text (Tailwind's text-gray-900) */
+            margin-bottom: 1.5rem; /* Increased margin (Tailwind's mb-6) */
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1rem; /* Tailwind's mb-4 */
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.875rem; /* Tailwind's text-sm */
+            font-weight: 500; /* Tailwind's font-medium */
+            color: #374151; /* Tailwind's text-gray-700 */
+            margin-bottom: 0.5rem; /* Tailwind's mb-2 */
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem; /* Tailwind's py-2 px-3 */
+            border-radius: 0.375rem; /* Tailwind's rounded-md */
+            border: 1px solid #d1d5db; /* Tailwind's border-gray-300 */
+            outline: none;
+            font-size: 1rem; /* Tailwind's text-base */
+            transition: border-color 0.2s ease, shadow-sm 0.2s ease; /* Smooth transition */
+            box-shadow: none; /* Reset default shadow */
+        }
+
+        .form-input:focus {
+            border-color: #3b82f6; /* Tailwind's focus:ring-blue-500, but direct color */
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);  /* focus:ring-blue-500 with opacity */
+        }
+
+        .form-input::placeholder {
+            color: #9ca3af; /* Tailwind's text-gray-400 */
+        }
+
+        .error-message {
+            color: #dc2626; /* Tailwind's text-red-500 */
+            font-size: 0.875rem; /* Tailwind's text-sm */
+            margin-top: 0.5rem; /* Tailwind's mt-2 */
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 0.75rem 1rem; /* Tailwind's py-2.5 px-3 */
+            border-radius: 0.375rem; /* Tailwind's rounded-md */
+            background-color: #3b82f6; /* Tailwind's bg-blue-500 */
+            color: #fff; /* Tailwind's text-white */
+            font-weight: 600; /* Tailwind's font-semibold */
+            cursor: pointer;
+            transition: background-color 0.3s ease; /* Smooth transition */
+            font-size: 1rem;
+            border: none;
+            display: block;
+            text-align: center;
+        }
+
+        .login-button:hover {
+            background-color: #2563eb; /* Tailwind's hover:bg-blue-700 */
+        }
+
+        .login-button:disabled {
+            background-color: #9ca3af; /* Tailwind's bg-gray-400 */
+            cursor: not-allowed;
+        }
+
+        .signup-link {
+            margin-top: 1rem; /* Tailwind's mt-4 */
+            text-align: center;
+            font-size: 0.875rem; /* Tailwind's text-sm */
+            color: #6b7280; /* Tailwind's text-gray-500 */
+        }
+
+        .signup-link a {
+            color: #3b82f6; /* Tailwind's text-blue-500 */
+            text-decoration: none;
+            font-weight: 500; /* Tailwind's font-medium */
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline; /* Tailwind's hover:underline */
+            color: #2563eb;
+        }
+    </style>
 </head>
 <body>
-    <header>
+  <header>
         <h1>Welcome to Pathfinders' Library</h1>
-        <nav>
-            <a href="signup.html">Sign Up</a>
-            <a href="login.html">Login</a>
-        </nav>
     </header>
-    <main>
-        <p>Welcome to our library! Please sign up or log in to continue.</p>
-    </main>
+    <div class="login-container">
+        <h2 class="login-title">Login</h2>
+        <form id="login-form">
+            <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" id="email" name="email" class="form-input" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" id="password" name="password" class="form-input" placeholder="Enter your password" required>
+            </div>
+            <div id="error-message" class="error-message"></div>
+            <button type="submit" class="login-button" id="login-button">Login</button>
+        </form>
+        <div class="signup-link">
+            Don't have an account? <a href="/signup">Sign up</a>
+        </div>
+    </div>
+
     <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js').then((registration) => {
-          console.log('Service Worker registered with success:', registration);
-        }).catch((error) => {
-          console.log('Service Worker registration failed:', error);
+        const loginForm = document.getElementById('login-form');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const errorMessage = document.getElementById('error-message');
+        const loginButton = document.getElementById('login-button');
+
+        loginForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const email = emailInput.value.trim();
+            const password = passwordInput.value.trim();
+
+            errorMessage.textContent = '';
+            loginButton.disabled = true;
+            loginButton.textContent = 'Loading...';
+
+            try {
+                // Simulate an API call (replace with your actual login logic)
+                await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate delay
+
+                if (!email || !password) {
+                    throw new Error("Please enter both email and password");
+                }
+
+                // Simulate a successful login
+                console.log('Logging in with:', { email, password });
+                // In a real app, you would send a request to your server here
+                // and handle the response.
+
+                // Example:
+                // const response = await fetch('/api/login', {
+                //   method: 'POST',
+                //   headers: {
+                //     'Content-Type': 'application/json'
+                //   },
+                //   body: JSON.stringify({ email, password })
+                // });
+                //
+                // if (!response.ok) {
+                //   const data = await response.json();
+                //   throw new Error(data.message || 'Login failed');
+                // }
+                //
+                // const data = await response.json();
+                // console.log(data); // Do something with the data
+                // window.location.href = '/dashboard'; // Redirect on success
+
+                // Simulate success:
+                // For a real app, you'd redirect to a different page.
+                // window.location.href = '/dashboard.html';
+
+            } catch (error) {
+                errorMessage.textContent = error.message;
+            } finally {
+                loginButton.disabled = false;
+                loginButton.textContent = 'Login';
+            }
         });
-      });
-    }
     </script>
 </body>
 </html>
