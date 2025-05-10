@@ -42,7 +42,7 @@
         .colorful-text {
             background-image: linear-gradient(to right, #86ef7d, #22c55e, #16a34a);
             -webkit-background-clip: text;
-            background-clip: text; /* Added for standard compatibility */
+            background-clip: text;
             color: transparent;
             text-shadow: 0 0 5px rgba(60, 80, 67, 0.5);
         }
@@ -156,7 +156,7 @@
                 padding: 1.5rem;
             }
             .welcome-container{
-               padding: 1rem;
+                padding: 1rem;
             }
             body{
                 padding: 0;
@@ -174,7 +174,7 @@
     </div>
     <div class="login-container">
         <h2 class="login-title">Login</h2>
-        <form id="login-form">
+        <form id="loginForm">
             <div class="form-group">
                 <label for="email" class="form-label">Email</label>
                 <input type="email" id="email" name="email" class="form-input" placeholder="Enter your email" required>
@@ -191,67 +191,6 @@
         </div>
     </div>
 
-    <script>
-    const loginForm = document.getElementById('login-form');
-    const emailInput = document.getElementById('email');
-    const passwordInput = document.getElementById('password');
-    const errorMessage = document.getElementById('error-message');
-    const loginButton = document.getElementById('login-button');
-
-    loginForm.addEventListener('submit', async (event) => {
-        event.preventDefault();
-
-        const email = emailInput.value.trim();
-        const password = passwordInput.value.trim();
-
-        errorMessage.textContent = '';
-        loginButton.disabled = true;
-        loginButton.textContent = 'Loading...';
-
-        try {
-            // Basic client-side validation (you should have more robust validation)
-            if (!email || !password) {
-                throw new Error("Please enter both email and password");
-            }
-
-            // Email validation (basic example)
-            const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-            if (!emailRegex.test(email)) {
-                throw new Error("Invalid email format");
-            }
-
-            // Send data to the server using fetch
-            const response = await fetch('https://mobileapp-backend-1.onrender.com/login', {  // Replace with your actual API endpoint
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, password }),
-            });
-
-            const data = await response.json(); // Parse the JSON response from the server
-
-            if (response.ok) {
-                //  Handle successful login.  The server should send back a token or session information.
-                console.log('Login successful!', data);
-                //  For example, you might store a token:
-                //  localStorage.setItem('token', data.token);
-                //  And then redirect:
-                //  window.location.href = '/dashboard'; //  Replace with your dashboard URL
-                  alert('Login successful!'); //Added an alert for successful login
-            } else {
-                // Handle login error.  The server should send an error message.
-                throw new Error(data.message || 'Login failed'); //  Use the message from the server
-            }
-
-        } catch (error) {
-            errorMessage.textContent = error.message;
-        } finally {
-            loginButton.disabled = false;
-            loginButton.textContent = 'Login';
-        }
-    });
-</script>
-
+    <script src="auth.js" defer></script>
 </body>
 </html>
