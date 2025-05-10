@@ -5,37 +5,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f3f4f6;
-            display: flex; /* Use Flexbox for centering */
-            flex-direction: column; /* Stack items vertically by default */
+            display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            text-align: center; /* Center everything horizontally by default */
+            text-align: center;
         }
 
         .welcome-container {
             width: 100%;
-            max-width: 400px; /* Same max-width as form */
-            padding: 0 1rem; /* Add some horizontal padding */
-            margin-bottom: 1.5rem; /* Tailwind's mb-6 */
+            max-width: 400px;
+            padding: 0 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .welcome-text {
-            font-size: 1.25rem; /* Tailwind's text-xl */
-            font-weight: 600; /* Tailwind's font-semibold */
-            color: #334155;  /* Tailwind text-gray-800 */
-            word-wrap: break-word;      /* Handle long words */
-            text-align: center;         /* Center the text */
+            font-size: 2rem;
+            font-weight: 700;
+            color: #334155;
+            word-wrap: break-word;
+            text-align: center;
             line-height: 1.4;
+            font-family: 'Montserrat', sans-serif;
         }
+
+        .colorful-text {
+            background-image: linear-gradient(to right, #6b7280, #3b82f6, #8b5cf6);
+            /* -webkit-background-clip: text; */
+            color: transparent;
+            text-shadow: 0 0 5px rgba(139, 92, 246, 0.5);
+        }
+
+        .stylish-w {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.4rem;
+            font-weight: 700;
+        }
+
 
         .login-container {
             width: 100%;
@@ -134,23 +150,26 @@
             color: #2563eb;
         }
 
-        /* Media query for mobile devices (max-width: 640px - Tailwind's sm breakpoint) */
         @media (max-width: 640px) {
             .login-container {
-                padding: 1.5rem; /* Slightly reduced padding on mobile */
+                padding: 1.5rem;
             }
             .welcome-container{
                padding: 1rem;
             }
             body{
-                padding: 0; /* Remove body padding which can interfere with centering on small screens */
+                padding: 0;
             }
         }
     </style>
 </head>
 <body>
     <div class="welcome-container">
-        <h1 class="welcome-text">Welcome to Pathfinders' Library</h1>
+        <h1 class="welcome-text">
+            <span class="colorful-text">
+                <span class="stylish-w">W</span>elcome to Pathfinders' Library
+            </span>
+        </h1>
     </div>
     <div class="login-container">
         <h2 class="login-title">Login</h2>
@@ -189,7 +208,6 @@
             loginButton.textContent = 'Loading...';
 
             try {
-                // Simulate an API call (replace with your actual login logic)
                 await new Promise(resolve => setTimeout(resolve, 1000));
 
                 if (!email || !password) {
