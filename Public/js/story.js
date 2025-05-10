@@ -3,7 +3,7 @@ const token = localStorage.getItem("token");
 
 // Redirect to login if user is not authenticated
 if (!token) {
-    window.location.href = "login.html";
+    window.location.href = "index.html";
 }
 
 // Get Story ID from URL

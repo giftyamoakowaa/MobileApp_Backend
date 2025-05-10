@@ -2,7 +2,7 @@ const apiUrl = 'https://mobileapp-backend-1.onrender.com/api/auth';
 
 document.addEventListener('DOMContentLoaded', () => {
   const signupForm = document.getElementById('signupForm');
-  const loginForm = document.getElementById('loginForm');
+  // const loginForm = document.getElementById('loginForm');
 
   if (signupForm) {
     signupForm.addEventListener('submit', async (e) => {
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (response.ok) {
           alert('Signup successful! Please login.');
-          window.location.href = 'login.html';
+          window.location.href = 'index.html';
         } else {
           alert(result.message || 'Signup failed!');
         }
@@ -39,34 +39,34 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  if (loginForm) {
-    loginForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value.trim();
+  // if (loginForm) {
+  //   loginForm.addEventListener('submit', async (e) => {
+  //     e.preventDefault();
+  //     const email = document.getElementById('email').value.trim();
+  //     const password = document.getElementById('password').value.trim();
 
-      try {
-        const response = await fetch(`${apiUrl}/login`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password }),
-        });
+  //     try {
+  //       const response = await fetch(`${apiUrl}/login`, {
+  //         method: 'POST',
+  //         headers: { 'Content-Type': 'application/json' },
+  //         body: JSON.stringify({ email, password }),
+  //       });
 
-        const result = await response.json();
+  //       const result = await response.json();
 
-        if (response.ok) {
-          localStorage.setItem('token', result.token);
-          alert('Login successful!');
-          window.location.href = 'stories.html';
-        } else {
-          alert(result.message || 'Login failed!');
-        }
-      } catch (error) {
-        console.error('Login Error:', error);
-        alert('An error occurred during login.');
-      }
-    });
-  }
+  //       if (response.ok) {
+  //         localStorage.setItem('token', result.token);
+  //         alert('Login successful!');
+  //         window.location.href = 'stories.html';
+  //       } else {
+  //         alert(result.message || 'Login failed!');
+  //       }
+  //     } catch (error) {
+  //       console.error('Login Error:', error);
+  //       alert('An error occurred during login.');
+  //     }
+  //   });
+  // }
 });
 
 
