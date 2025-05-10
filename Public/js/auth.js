@@ -52,7 +52,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     body: JSON.stringify({ email, password }),
                 });
 
-                const result = await response.json();
+                console.log("Raw Response (Login):", response); // ADDED THIS LINE FOR DEBUGGING
+
+                // IMPORTANT:  Check response.ok *before* trying to parse as JSON
+                if (!response.ok) {
+                    //  If the server didn't respond with a 2xx status, we *don't* assume JSON
+                    const text = await response.text(); // Get the response as plain text
+                    console.error("Server Error Response (Login):", text); // Log the error text
+                    throw new Error(`Login failed: ${response.status} - ${text}`); //  Include status
+                }
+
+                const result = await response.json();  //  *NOW* we parse as JSON, because response.ok
+
+                console.log("Parsed Response Data (Login):", result); // ADDED THIS LINE FOR DEBUGGING
+
 
                 if (response.ok) {
                     localStorage.setItem('token', result.token);
