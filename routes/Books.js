@@ -135,4 +135,35 @@ router.get("/", async (req, res) => {
   }
 });
 
+
+// 📌 Update a book by ID
+router.put("/:bookId", upload.single("coverImage"), async (req, res) => {
+    try {
+        const { bookId } = req.params;
+        const { title, author, description } = req.body;
+
+        const book = await Book.findById(bookId);
+        if (!book) {
+            return res.status(404).json({ message: "Book not found" });
+        }
+
+        // Update fields
+        book.title = title || book.title;
+        book.author = author || book.author;
+        book.description = description || book.description;
+
+        // Handle cover image update
+        if (req.file) {
+            book.coverImage = `/uploads/${req.file.filename}`;
+        }
+
+        await book.save();
+        res.status(200).json(book);
+    } catch (error) {
+        console.error("Update error:", error);
+        res.status(500).json({ message: "Error updating book", error });
+    }
+});
+
+
 export default router;
