@@ -88,7 +88,7 @@ const apiUrl = 'https://mobileapp-backend-1.onrender.com/api/auth';
 
 document.addEventListener('DOMContentLoaded', () => {
     const signupForm = document.getElementById('signupForm');
-    const loginForm = document.getElementById('loginForm');
+    // const loginForm = document.getElementById('loginForm');
 
     if (signupForm) {
         signupForm.addEventListener('submit', async (e) => {
@@ -125,43 +125,5 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    if (loginForm) {
-        loginForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value.trim();
-
-            try {
-                const response = await fetch(`${apiUrl}/login`, {  //  Correct URL
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' }, //  Correct Header
-                    body: JSON.stringify({ email, password }),       //  Correct Body
-                });
-
-                console.log("Raw Response (Login):", response);  //  IMPORTANT DEBUG:  See the *raw* response
-
-                if (!response.ok) {  //  Check for HTTP errors FIRST
-                    const errorText = await response.text();  // Get the *text* of the error
-                    console.error("Server Error (Login):", errorText);
-                    throw new Error(`Login failed: ${response.status} - ${errorText}`);
-                }
-
-                const result = await response.json(); // Parse JSON *after* checking response.ok
-
-                console.log("Parsed Response Data (Login):", result);
-
-                if (response.ok) { //redundant check
-                    localStorage.setItem('token', result.token);
-                    alert('Login successful!');
-                    window.location.href = 'stories.html';
-                } else {
-                    alert(result.message || 'Login failed!');
-                }
-
-            } catch (error) {
-                console.error('Login Error:', error);
-                alert(error.message); // Show error from fetch or JSON parsing
-            }
-        });
-    }
+    
 });
