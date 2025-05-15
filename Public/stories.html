@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -56,4 +56,319 @@
     <script src="app.js"></script>
 </body>
 </html>
+ -->
 
+
+
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stories</title>
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Add these styles to your existing styles or in a <style> tag */
+        .hidden {
+            display: none;
+        }
+        .chapter-display-area {
+            position: fixed; /* Use fixed positioning */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9); /* Darker semi-transparent overlay */
+            display: flex;
+            flex-direction: column; /* Stack items vertically */
+            align-items: center;
+            justify-content: center;
+            z-index: 1000; /* Ensure it's on top of everything */
+        }
+        #chapter-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            max-width: 800px; /* Limit the width of the content box */
+            max-height: 80vh; /* Limit the height and make it scrollable */
+            overflow-y: auto;
+            position: relative; /* Needed for absolute positioning of close button */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: left;
+            font-family: 'Press Start 2P', sans-serif;
+            font-size: 0.8rem;
+            line-height: 1.5;
+            margin-bottom: 2rem; /* Add margin at the bottom for buttons */
+        }
+        #chapter-content h2{
+            font-size: 1.2rem;
+            color: #8b5cf6;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+        #chapter-content p{
+            color: #374151;
+            margin-bottom: 1rem;
+
+        }
+        .dialogue {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .speaker {
+            font-weight: bold;
+            color: #1e40af; /* Tailwind's blue-800 */
+        }
+
+        .line {
+            margin-left: 0.5rem; /* Add some space between speaker and line */
+        }
+
+        #close-chapter-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background-color: transparent;
+            border: none;
+            font-size: 1.5rem;
+            color: #6b7280;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+        #close-chapter-button:hover {
+            color: #374151;
+        }
+        .chapter-nav-buttons {
+            display: flex;
+            justify-content: center; /* Center the buttons horizontally */
+            gap: 1rem; /* Add some space between the buttons */
+            margin-top: 0; /* Remove the margin from #chapter-content */
+        }
+
+        .chapter-nav-button {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            color: white;
+            background-color: #8b5cf6;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .chapter-nav-button:hover {
+            background-color: #7835f0;
+        }
+
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Stories</h1>
+        <button id="logoutBtn">Logout</button>
+    </header>
+    <main id="book-list">
+        <div class="book-card">
+            <h3>Unveiling Love</h3>
+            <div class="likes">Likes: <span id="book-likes-1">0</span></div>
+            <div class="button-group">
+                <button class="likes-button" onclick="likeBook('1')">Like</button>
+                <button class="comments-button" onclick="openComments('1')">Comments</button>
+                <button class="read-chapters-button" onclick="viewChapters('1')">Read Chapters</button>
+            </div>
+            <div id="comments-1" class="comments-section" style="display: none; margin-top: 10px;">
+                <input type="text" id="comment-input-1" placeholder="Write a comment...">
+                <button onclick="addComment('1')">Post</button>
+                <div id="comments-list-1"></div>
+            </div>
+        </div>
+        <div class="book-card">
+            <h3>Heartfelt Horizons</h3>
+            <div class="likes">Likes: <span id="book-likes-2">0</span></div>
+            <div class="button-group">
+                <button class="likes-button" onclick="likeBook('2')">Like</button>
+                <button class="comments-button" onclick="openComments('2')">Comments</button>
+                <button class="read-chapters-button" onclick="viewChapters('2')">Read Chapters</button>
+            </div>
+            <div id="comments-2" class="comments-section" style="display: none; margin-top: 10px;">
+                <input type="text" id="comment-input-2" placeholder="Write a comment...">
+                <button onclick="addComment('2')">Post</button>
+                <div id="comments-list-2"></div>
+            </div>
+        </div>
+    </main>
+    <div id="chapter-display-area" class="hidden">
+        <div id="chapter-content">
+            <button id="close-chapter-button" onclick="closeChapter()">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2 id="chapter-title"></h2>
+            <div id="chapter-text"></div>
+        </div>
+        <div class="chapter-nav-buttons">
+            <button id="prev-chapter-button" class="chapter-nav-button">Previous</button>
+            <button id="next-chapter-button" class="chapter-nav-button">Next</button>
+        </div>
+    </div>
+    <script>
+        // --- Existing code (from your provided stories.html) ---
+        let likes = {
+            '1': 0,
+            '2': 0,
+        };
+
+        function likeBook(bookId) {
+            likes[bookId]++;
+            document.getElementById(`book-likes-${bookId}`).textContent = likes[bookId];
+        }
+
+        let comments = {
+            '1': [],
+            '2': [],
+        };
+
+        function addComment(bookId) {
+            const commentInputId = `comment-input-${bookId}`;
+            const commentListId = `comments-list-${bookId}`;
+            const commentInput = document.getElementById(commentInputId);
+            const commentList = document.getElementById(commentListId);
+
+            const commentText = commentInput.value.trim();
+            if (commentText !== "") {
+                comments[bookId].push(commentText);
+                const commentItem = document.createElement('p');
+                commentItem.textContent = commentText;
+                commentList.appendChild(commentItem);
+                commentInput.value = '';
+            }
+        }
+
+        function openComments(bookId) {
+            const commentsSection = document.getElementById(`comments-${bookId}`);
+            commentsSection.style.display = commentsSection.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // --- New Chapter Viewing Code ---
+        const chapterDisplayArea = document.getElementById('chapter-display-area');
+        const chapterContentDiv = document.getElementById('chapter-content');
+        const chapterTitleElement = document.getElementById('chapter-title');
+        const chapterTextElement = document.getElementById('chapter-text');
+        const nextChapterButton = document.getElementById('next-chapter-button');
+        const prevChapterButton = document.getElementById('prev-chapter-button');  // Get the previous button
+        const closeChapterButton = document.getElementById('close-chapter-button');
+
+        let currentBookId = null;
+        let currentChapterIndex = 0;
+        let chapters = [];
+
+        /**
+         * Loads and displays a chapter's content.
+         * @param {object} chapter - The chapter object from your API.
+         */
+        function loadChapter(chapter) {
+            if (!chapter) {
+                chapterTextElement.innerHTML = "<p>Chapter not found.</p>";
+                nextChapterButton.style.display = 'none';
+                prevChapterButton.style.display = 'none'; // Hide previous button
+                return;
+            }
+
+            currentChapterIndex = chapter.chapterNumber - 1;
+            chapterTitleElement.textContent =  chapter.title ;
+            chapterTextElement.innerHTML = '';
+
+            const lines = chapter.content.split('\n');
+            lines.forEach(line => {
+                if (line.includes(':')) {
+                    const [speaker, ...textParts] = line.split(':');
+                    const text = textParts.join(':').trim();
+
+                    const dialogueParagraph = document.createElement('p');
+                    dialogueParagraph.classList.add('dialogue');
+
+                    const speakerSpan = document.createElement('span');
+                    speakerSpan.classList.add('speaker');
+                    speakerSpan.textContent = speaker.trim() + ':';
+
+                    const lineSpan = document.createElement('span');
+                    lineSpan.classList.add('line');
+                    lineSpan.textContent = text;
+
+                    dialogueParagraph.appendChild(speakerSpan);
+                    dialogueParagraph.appendChild(lineSpan);
+                    chapterTextElement.appendChild(dialogueParagraph);
+                } else if (line.trim() !== "") {
+                    const narrativeParagraph = document.createElement('p');
+                    narrativeParagraph.textContent = line.trim();
+                    chapterTextElement.appendChild(narrativeParagraph);
+                }
+            });
+
+            chapterDisplayArea.classList.remove('hidden');
+            updateNavButtons(); // Call updateNavButtons instead of updateNextButton
+        }
+
+        function updateNavButtons() {
+            if (currentChapterIndex <= 0) {
+                prevChapterButton.style.display = 'none';
+            } else {
+                prevChapterButton.style.display = 'block';
+                prevChapterButton.onclick = () => {
+                    loadChapter(chapters[currentChapterIndex - 1]);
+                };
+            }
+
+            if (currentChapterIndex < chapters.length - 1) {
+                nextChapterButton.textContent = 'Next Chapter';
+                nextChapterButton.style.display = 'block';
+                nextChapterButton.onclick = () => {
+                    loadChapter(chapters[currentChapterIndex + 1]);
+                };
+            } else {
+                nextChapterButton.textContent = 'Close';
+                nextChapterButton.style.display = 'block';
+                nextChapterButton.onclick = () => closeChapter();
+            }
+        }
+
+        function closeChapter() {
+            chapterDisplayArea.classList.add('hidden');
+            currentChapterIndex = 0;
+            currentBookId = null;
+        }
+
+        /**
+         * Handles the "Read Chapters" button click.
+         * @param {string} bookId - The ID of the book.
+         */
+        function viewChapters(bookId) {
+            currentBookId = bookId;
+            fetch(`https://mobileapp-backend-1.onrender.com/api/books/${bookId}/chapters`)
+                .then(response => {
+                    if (!response.ok) throw new Error("Failed to fetch chapters");
+                    return response.json();
+                })
+                .then(chapters => {
+                    window.chapters = chapters;
+                    if (chapters && chapters.length > 0) {
+                         loadChapter(chapters[0]);
+                    }
+                    else{
+                        chapterTextElement.innerHTML = "<p>No chapters found for this book.</p>";
+                        chapterDisplayArea.classList.remove('hidden');
+                        nextChapterButton.style.display = 'none';
+                        prevChapterButton.style.display = 'none';
+                    }
+
+                })
+                .catch(error => console.error("Error fetching chapters:", error));
+        }
+    </script>
+</body>
+</html>
