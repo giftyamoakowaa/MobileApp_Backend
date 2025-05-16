@@ -128,6 +128,14 @@
 
 
 document.addEventListener('DOMContentLoaded', () => {
+    const token = localStorage.getItem("token");  // Get the token
+
+    // Redirect to login if user is not authenticated.  Do this *once* here.
+    if (!token) {
+        window.location.href = "index.html";
+        return; // Stop execution if not logged in
+    }
+
     fetch('https://mobileapp-backend-1.onrender.com/api/books')
         .then(response => {
             if (!response.ok) throw new Error("Failed to fetch books");

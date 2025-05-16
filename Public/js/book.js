@@ -105,12 +105,9 @@
 
 
 const apiUrl = "https://mobileapp-backend-1.onrender.com/api";
-const token = localStorage.getItem("token");
+//const token = localStorage.getItem("token");  // Removed token check
+// Removed the initial token check and redirect.  Assume we only get here if authenticated.
 
-// Redirect to login if user is not authenticated
-if (!token) {
-    window.location.href = "index.html";
-}
 
 // Get Story ID from URL
 const urlParams = new URLSearchParams(window.location.search);
@@ -125,11 +122,12 @@ const prevChapterButton = document.getElementById('prev-chapter-button');
 const closeChapterButton = document.getElementById('close-chapter-button');
 
 
+
 // Fetch Story Details (Now fetches chapter details)
 const fetchBookDetails = async () => { // Changed function name
     try {
         const response = await fetch(`${apiUrl}/books/${bookId}/chapters`, { // Adjusted API endpoint
-            headers: { Authorization: `Bearer ${token}` },
+            //headers: { Authorization: `Bearer ${token}` }, // Removed Authorization header
         });
 
         if (!response.ok) {
@@ -234,48 +232,6 @@ function updateNavButtons() {
 closeChapterButton.onclick = () => {
     window.location.href = 'Stories.html';
 };
-
-
-// Like a Chapter  (These functions are not used in book.js)
-// const likeChapter = async (chapterId) => {
-//     try {
-//         const response = await fetch(`${apiUrl}/chapters/${chapterId}/like`, {
-//             method: "POST",
-//             headers: { Authorization: `Bearer ${token}` },
-//         });
-
-//         if (response.ok) {
-//             fetchBookDetails(); // Refresh the page to update likes
-//         }
-//     } catch (error) {
-//         console.error("Error liking chapter:", error);
-//     }
-// };
-
-// // Add a Comment  (These functions are not used in book.js)
-// const addComment = async (chapterId) => {
-//     const commentText = document.getElementById(`comment-${chapterId}`).value;
-
-//     if (!commentText) return alert("Comment cannot be empty!");
-
-//     try {
-//         const response = await fetch(`${apiUrl}/chapters/${chapterId}/comment`, {
-//             method: "POST",
-//             headers: {
-//                 "Content-Type": "application/json",
-//                 Authorization: `Bearer ${token}`
-//             },
-//             body: JSON.stringify({ text: commentText }),
-//         });
-
-//         if (response.ok) {
-//             fetchBookDetails(); // Refresh the page to update comments
-//         }
-//     } catch (error) {
-//         console.error("Error adding comment:", error);
-//     }
-// };
-
 
 
 // Load Story Details when Page Loads  (Now loads chapter details)
