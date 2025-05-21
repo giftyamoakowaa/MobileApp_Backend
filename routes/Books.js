@@ -106,7 +106,7 @@ router.post("/", upload.single("coverImage"), async (req, res) => {
       return res.status(400).json({ error: "Cover image is required!" });
     }
 
-    const coverImage = `/uploads/${req.file.filename}`;
+    const coverImage = req.file.path;
 
     const newBook = new Book({
       title,
@@ -154,7 +154,7 @@ router.put("/:bookId", upload.single("coverImage"), async (req, res) => {
 
         // Handle cover image update
         if (req.file) {
-            book.coverImage = `/uploads/${req.file.filename}`;
+            book.coverImage = req.file.path;
         }
 
         await book.save();
