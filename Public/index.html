@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -52,7 +53,6 @@
             font-weight: 700;
         }
 
-
         .login-container {
             width: 100%;
             max-width: 400px;
@@ -80,6 +80,12 @@
             font-weight: 500;
             color: #374151;
             margin-bottom: 0.5rem;
+            text-align: left; /* Align label to the left */
+        }
+
+        .password-input-container {
+            position: relative; /* Needed for absolute positioning of the icon */
+            width: 100%;
         }
 
         .form-input {
@@ -91,6 +97,8 @@
             font-size: 1rem;
             transition: border-color 0.2s ease, shadow-sm 0.2s ease;
             box-shadow: none;
+            box-sizing: border-box; /* Include padding in width */
+            padding-right: 3rem; /* Make space for the icon */
         }
 
         .form-input:focus {
@@ -102,10 +110,26 @@
             color: #9ca3af;
         }
 
+        .toggle-password-icon {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #9ca3af;
+            font-size: 1rem;
+            transition: color 0.2s ease;
+        }
+
+        .toggle-password-icon:hover {
+            color: #3b82f6;
+        }
+
         .error-message {
             color: #dc2626;
             font-size: 0.875rem;
             margin-top: 0.5rem;
+            text-align: left; /* Align error message to the left */
         }
 
         .login-button {
@@ -121,6 +145,7 @@
             border: none;
             display: block;
             text-align: center;
+            margin-top: 1.5rem; /* Add some space above the button */
         }
 
         .login-button:hover {
@@ -182,7 +207,10 @@
             </div>
             <div class="form-group">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" id="password" name="password" class="form-input" placeholder="Enter your password" required>
+                <div class="password-input-container">
+                    <input type="password" id="password" name="password" class="form-input" placeholder="Enter your password" required>
+                    <i class="fas fa-eye toggle-password-icon" id="toggle-password"></i>
+                </div>
             </div>
             <div id="error-message" class="error-message"></div>
             <button type="submit" class="login-button" id="login-button">Login</button>
@@ -193,13 +221,26 @@
     </div>
 
     <script>
-        const apiUrl = 'https://mobileapp-backend-1.onrender.com/api/auth';  // Correct base URL
+        const apiUrl = 'https://mobileapp-backend-1.onrender.com/api/auth';
 
-        const loginForm = document.getElementById('login-form'); // Correct form ID
+        const loginForm = document.getElementById('login-form');
         const emailInput = document.getElementById('email');
         const passwordInput = document.getElementById('password');
         const errorMessage = document.getElementById('error-message');
         const loginButton = document.getElementById('login-button');
+        const togglePassword = document.getElementById('toggle-password'); // Get the eye icon
+
+        // --- Password Toggle Logic ---
+        togglePassword.addEventListener('click', function () {
+            // Toggle the type attribute
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+
+            // Toggle the eye icon (slash/no slash)
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+        // --- End Password Toggle Logic ---
 
         loginForm.addEventListener('submit', async (event) => {
             event.preventDefault();
@@ -231,18 +272,80 @@
                 const result = await response.json();
                 console.log("Parsed Response Data (Login):", result);
 
-
                 localStorage.setItem('token', result.token);
-                alert('Login successful!');
-                window.location.href = 'stories.html';
+                // Use a custom message box instead of alert()
+                showMessageBox('Login successful!', 'success');
+                // Redirect after a short delay to allow message box to be seen
+                setTimeout(() => {
+                    window.location.href = 'stories.html';
+                }, 1500); // 1.5 second delay
 
             } catch (error) {
                 errorMessage.textContent = error.message;
+                // Use a custom message box for errors too
+                showMessageBox(`Error: ${error.message}`, 'error');
             } finally {
                 loginButton.disabled = false;
                 loginButton.textContent = 'Login';
             }
         });
+
+        // --- Custom Message Box Functions (Replaces alert()) ---
+        function showMessageBox(message, type) {
+            let messageBox = document.getElementById('custom-message-box');
+            if (!messageBox) {
+                messageBox = document.createElement('div');
+                messageBox.id = 'custom-message-box';
+                document.body.appendChild(messageBox);
+            }
+
+            messageBox.textContent = message;
+            messageBox.className = 'custom-message-box'; // Reset classes
+            if (type === 'success') {
+                messageBox.classList.add('success');
+            } else if (type === 'error') {
+                messageBox.classList.add('error');
+            }
+
+            messageBox.style.display = 'block';
+            messageBox.style.opacity = '1';
+
+            // Hide after 3 seconds
+            setTimeout(() => {
+                messageBox.style.opacity = '0';
+                setTimeout(() => {
+                    messageBox.style.display = 'none';
+                }, 500); // Wait for fade-out transition
+            }, 3000);
+        }
+        // --- End Custom Message Box Functions ---
     </script>
+
+    <style>
+        .custom-message-box {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: white;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            display: none; /* Hidden by default */
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .custom-message-box.success {
+            background-color: #4CAF50; /* Green */
+        }
+
+        .custom-message-box.error {
+            background-color: #f44336; /* Red */
+        }
+    </style>
 </body>
 </html>
