@@ -111,7 +111,17 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   
 
-
+// --- LOGOUT FUNCTION MOVED INSIDE DOMContentLoaded ---
+    const logoutButton = document.getElementById("logoutBtn");
+    if (logoutButton) { // Check if the button exists before adding listener
+        logoutButton.addEventListener("click", () => {
+            localStorage.removeItem("token"); // Remove the token from local storage
+            window.location.href = "index.html"; // Redirect to your login page
+        });
+    } else {
+        console.warn("Logout button not found. Ensure 'logoutBtn' ID is correct.");
+    }
+    // --- END LOGOUT FUNCTION ---
   
 
 if ('serviceWorker' in navigator) {
