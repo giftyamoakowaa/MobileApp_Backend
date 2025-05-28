@@ -27,8 +27,6 @@ const io = new Server(server, {
   }
 });
 
-// REMOVE THIS LINE: app.options('*', cors()); // <--- THIS IS THE PROBLEM LINE
-
 // Middleware
 app.use(express.json());
 
