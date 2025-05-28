@@ -17,23 +17,28 @@ const __dirname = path.dirname(__filename);
 dotenv.config();
 const app = express();
 const server = createServer(app);
+
+// CORS configuration for Socket.io (this is separate and correct for WebSockets)
 const io = new Server(server, {
   cors: {
     origin: 'https://pathfinderslibrary.netlify.app',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
   }
 });
 
-app.options('*', cors());
+// REMOVE THIS LINE: app.options('*', cors()); // <--- THIS IS THE PROBLEM LINE
 
 // Middleware
 app.use(express.json());
-app.use(cors({  // Added options here, too
-    origin: "https://pathfinderslibrary.netlify.app", //  *Also* use your Netlify URL here
+
+// Main CORS configuration for Express HTTP requests (fetch, etc.)
+app.use(cors({
+    origin: "https://pathfinderslibrary.netlify.app", // Your new Netlify frontend URL
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
 }));
+
 app.use(express.static('public'));
 // app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
@@ -43,10 +48,9 @@ mongoose.connect(process.env.MONGO_URI)
   .catch((err) => console.error("MongoDB connection error:", err));
 
 // Routes
-app.use("/api/chapters", ChapterRouter); 
+app.use("/api/chapters", ChapterRouter);
 app.use("/api/auth", authRouter); // Use auth routes
 app.use("/api/books", router); // Now `/api/books` works
-
 
 
 // Test Route
