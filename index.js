@@ -19,7 +19,7 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: 'https://creative-alfajores-6c6850.netlify.app/',
+    origin: 'https://pathfinderslibrary.netlify.app',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   }
@@ -30,7 +30,7 @@ app.options('*', cors());
 // Middleware
 app.use(express.json());
 app.use(cors({  // Added options here, too
-    origin: "https://creative-alfajores-6c6850.netlify.app", //  *Also* use your Netlify URL here
+    origin: "https://pathfinderslibrary.netlify.app", //  *Also* use your Netlify URL here
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
 }));
