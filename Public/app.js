@@ -5,17 +5,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // --- Authentication Check ---
     const token = localStorage.getItem('token');
-    // --- ADD THESE TWO LINES FOR DEBUGGING ---
     console.log("app.js: Running authentication check.");
     console.log("app.js: Token found in localStorage on stories.html load:", token);
-    // --- END ADDITION ---
     if (!token) {
-        // If no token, redirect to login page
-        console.log("app.js: No token found, redirecting to index.html."); // ADD THIS LINE FOR DEBUGGING
+        console.log("app.js: No token found, redirecting to index.html.");
         window.location.href = '/index.html';
-        return; // Stop further execution
+        return;
     }
-
 
     // --- Logout Functionality ---
     if (logoutButton) {
@@ -34,15 +30,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     async function fetchBooks() {
         try {
             // Fetch books with authentication token
+            console.log("fetchBooks: Attempting to fetch books with token..."); // ADD THIS LINE
             const response = await fetch(`${API_BASE_URL}/api/books`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             });
 
+            console.log("fetchBooks: Raw API Response for books:", response); // ADD THIS LINE
             if (!response.ok) {
+                console.log("fetchBooks: API response for books not OK. Status:", response.status); // ADD THIS LINE
                 // If token is invalid or expired, redirect to login
                 if (response.status === 401 || response.status === 403) {
+                    console.log("fetchBooks: Detected 401/403 status from API, redirecting to login."); // ADD THIS LINE
                     alert('Session expired or unauthorized. Please log in again.');
                     localStorage.removeItem('token');
                     window.location.href = '/index.html';
@@ -52,80 +52,50 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
 
             const books = await response.json();
+            console.log("fetchBooks: Books data received:", books); // ADD THIS LINE
             bookListContainer.innerHTML = ''; // Clear existing content
 
             if (books.length === 0) {
                 bookListContainer.innerHTML = '<p class="text-center text-gray-600">No books found. Check back later!</p>';
                 return;
             }
-
+            // ... (rest of your book display loop) ...
             books.forEach(book => {
                 const bookCard = document.createElement('div');
                 bookCard.classList.add('book-card');
-
-                // Create and add the image element
                 const coverImage = document.createElement('img');
-                coverImage.src = book.coverImage || 'https://via.placeholder.com/200x300?text=No+Cover'; // Fallback image
+                coverImage.src = book.coverImage || 'https://via.placeholder.com/200x300?text=No+Cover';
                 coverImage.alt = `Cover for ${book.title}`;
                 bookCard.appendChild(coverImage);
-
-                // Create content wrapper for better layout with new CSS
                 const bookCardContent = document.createElement('div');
                 bookCardContent.classList.add('book-card-content');
                 bookCard.appendChild(bookCardContent);
-
-
                 const titleElement = document.createElement('h3');
                 titleElement.textContent = book.title;
-                bookCardContent.appendChild(titleElement); // Append to content wrapper
-
-
-                // We'll add author or description here later if you want more detail
-                // const authorElement = document.createElement('p');
-                // authorElement.textContent = `By: ${book.author || 'Unknown'}`;
-                // bookCardContent.appendChild(authorElement);
-
-
-                // Moved likes into actions section for better styling if desired
-                const likesElement = document.createElement('span'); // Use span or div for just text
-                likesElement.textContent = `Likes: ${book.likes || 0}`; // Default to 0 if null
-                likesElement.classList.add('like-count'); // Add a class for styling
-                // We will add this to the action group or just display it
-
+                bookCardContent.appendChild(titleElement);
+                const likesElement = document.createElement('span');
+                likesElement.textContent = `Likes: ${book.likes || 0}`;
+                likesElement.classList.add('like-count');
                 const buttonGroup = document.createElement('div');
-                buttonGroup.classList.add('card-actions'); // Use 'card-actions' class as per new CSS
-
-
+                buttonGroup.classList.add('card-actions');
                 const likeButton = document.createElement('button');
-                likeButton.classList.add('like-btn'); // Use 'like-btn' as per new CSS
-                likeButton.innerHTML = `<i class="fa-regular fa-heart"></i> ${book.likes || 0}`; // Using icon and count
-                // Add event listener for liking functionality (will need backend integration)
+                likeButton.classList.add('like-btn');
+                likeButton.innerHTML = `<i class="fa-regular fa-heart"></i> ${book.likes || 0}`;
                 likeButton.addEventListener('click', (e) => {
-                    e.stopPropagation(); // Prevent card click if you make card clickable
-                    alert('Like feature coming soon!'); // Placeholder
-                    // You'll implement the actual like API call here
+                    e.stopPropagation();
+                    alert('Like feature coming soon!');
                 });
-
-
                 const readChaptersButton = document.createElement('button');
-                readChaptersButton.classList.add('read-chapters-btn'); // Use 'read-chapters-btn' as per new CSS
+                readChaptersButton.classList.add('read-chapters-btn');
                 readChaptersButton.textContent = 'Read Chapters';
-
-                // --- IMPORTANT CHANGE HERE: REDIRECT TO CHAPTER.HTML ---
                 readChaptersButton.addEventListener('click', () => {
                     const bookId = book._id;
-                    const initialChapterNumber = 1; // Always start with chapter 1 when navigating from books list
+                    const initialChapterNumber = 1;
                     window.location.href = `/chapter.html?bookId=${bookId}&chapterNumber=${initialChapterNumber}`;
                 });
-                // --- END IMPORTANT CHANGE ---
-
-
                 buttonGroup.appendChild(likeButton);
-                // buttonGroup.appendChild(commentsButton); // Removed comments button for now, can add back if needed
                 buttonGroup.appendChild(readChaptersButton);
-
-                bookCardContent.appendChild(buttonGroup); // Append button group to content wrapper
-
+                bookCardContent.appendChild(buttonGroup);
                 bookListContainer.appendChild(bookCard);
             });
         } catch (error) {
