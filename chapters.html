@@ -3,48 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Library</title>
-    <link rel="stylesheet" href="styles.css">
+    <title id="chapterPageTitle">Chapter - Pathfinders' Library</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
+    <link rel="manifest" href="/manifest.json"> <script async src="https://www.googletagmanager.com/gtag/js?id=G-NRMCCS9G38"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-NRMCCS9G38');
+    </script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css"> <style>
+        /* Specific styles for chapter.html content */
+        body {
+            background-color: #f7f7f7; /* Light background for reading */
+        }
+        .chapter-container {
+            max-width: 800px;
+            margin: 40px auto;
+            background-color: white;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            line-height: 1.8;
+            font-size: 1.1rem;
+            color: #333;
+        }
+        .chapter-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            color: #222;
+            margin-bottom: 25px;
+            text-align: center;
+            line-height: 1.2;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+        .chapter-content {
+            font-family: 'Inter', sans-serif;
+            margin-bottom: 30px;
+            white-space: pre-wrap; /* Preserves formatting from backend */
+        }
+        .chapter-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        .chapter-navigation button {
+            padding: 12px 25px;
+            background-color: #4A90E2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .chapter-navigation button:hover {
+            background-color: #357ABD;
+        }
+        .chapter-navigation button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .back-to-books {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #4A90E2;
+            text-decoration: none;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        .back-to-books:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .chapter-container {
+                margin: 20px auto;
+                padding: 20px;
+            }
+            .chapter-title {
+                font-size: 1.8rem;
+                margin-bottom: 15px;
+            }
+            .chapter-content {
+                font-size: 1rem;
+            }
+            .chapter-navigation button {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Welcome to Our Book Library</h1>
+    <header class="bg-blue-600 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold font-montserrat">Pathfinders' Library</h1>
             <nav>
-                <ul>
-                    <li><a href="#">Sign Up</a></li>
-                    <li><a href="#">Login</a></li>
-                </ul>
+                <a href="/stories.html" class="hover:text-blue-200 transition duration-300 mx-2">Books</a>
+                <a href="/index.html" id="logoutBtn" class="hover:text-blue-200 transition duration-300 mx-2">Logout</a>
             </nav>
-        </header>
+        </div>
+    </header>
 
-        <div class="book-list">
-            <div class="book-card">
-                <h3>Unveiling Love</h3>
-                <div class="likes">Likes: 120</div>
-                <div class="button-group">
-                    <button class="likes-button">Like</button>
-                    <button class="comments-button">Comments</button>
-                    <button class="read-chapters-button" onclick="viewChapters(1)">Read Chapters</button>
-                </div>
+    <main>
+        <div class="chapter-container">
+            <h2 class="chapter-title" id="currentChapterTitle">Loading Chapter...</h2>
+            <div class="chapter-content" id="currentChapterContent"></div>
+
+            <div class="chapter-navigation">
+                <button id="prevChapterBtn" disabled>Previous Chapter</button>
+                <button id="nextChapterBtn" disabled>Next Chapter</button>
             </div>
+            <a href="/stories.html" class="back-to-books">Back to Books</a>
+        </div>
+    </main>
 
-            <div class="book-card">
-                <h3>Heartfelt Horizons</h3>
-                <div class="likes">Likes: 95</div>
-                <div class="button-group">
-                    <button class="likes-button">Like</button>
-                    <button class="comments-button">Comments</button>
-                    <button class="read-chapters-button" onclick="viewChapters(2)">Read Chapters</button>
-                </div>
-            </div>
-
-            </div>
-
-        <div id="chapter-container">
-            </div>
-    </div>
-
-    <script src="app.js"></script>
+    <script src="chapter.js"></script> 
 </body>
 </html>
