@@ -5,11 +5,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // --- Authentication Check ---
     const token = localStorage.getItem('token');
+    // --- ADD THESE TWO LINES FOR DEBUGGING ---
+    console.log("app.js: Running authentication check.");
+    console.log("app.js: Token found in localStorage on stories.html load:", token);
+    // --- END ADDITION ---
     if (!token) {
         // If no token, redirect to login page
+        console.log("app.js: No token found, redirecting to index.html."); // ADD THIS LINE FOR DEBUGGING
         window.location.href = '/index.html';
         return; // Stop further execution
     }
+
 
     // --- Logout Functionality ---
     if (logoutButton) {
